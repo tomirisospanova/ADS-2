@@ -1,42 +1,67 @@
 public class MyArrayList<E> implements MyList<E> {
 
-    private Object[] elements; // private instance variable to hold the elements of the list
-    private int size; // int variable to keep track of the number of elements in the list
-    
-    public MyArrayList() {
-        elements = new Object[10]; // initialize elements array with size 10
-        size = 0; // initialize size to 0
+    // Define an array to hold the elements of the list
+    private Object[] elements;
+
+    // Define a variable to keep track of the number of elements in the list
+    private int size;
+
+    // Constructor to create a new MyArrayList object with an initial capacity
+    public MyArrayList(int initialCapacity) {
+        elements = new Object[initialCapacity];
+        size = 0;
     }
-    
-    // Implement the add(E element) method
-    @Override
+
+    // Add an element to the end of the list
     public void add(E element) {
-        if (size == elements.length) { // if size is equal to the length of the elements array
-            Object[] newElements = new Object[elements.length * 2]; // create new array with double the size
-            System.arraycopy(elements, 0, newElements, 0, size); // copy over elements from the original array
-            elements = newElements; // update reference to elements array
+        // Check if the array is large enough to accommodate the new element
+        if (size == elements.length) {
+            // If not, create a new array with double the size of the original array
+            Object[] newElements = new Object[2 * elements.length];
+            // Copy over the elements from the original array
+            for (int i = 0; i < size; i++) {
+                newElements[i] = elements[i];
+            }
+            // Set the elements variable to the new array
+            elements = newElements;
         }
-        elements[size] = element; // add new element to end of array
-        size++; // increment size variable
+        // Add the new element to the end of the array
+        elements[size] = element;
+        // Increment the size variable
+        size++;
     }
-    
-    // Implement the get(int index) method
-    @Override
+
+    // Get the element at the specified index
     public E get(int index) {
-        if (index < 0 || index >= size) { // check if index is out of bounds
+        // Check if the index is valid
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        return (E) elements[index]; // return element at specified index
+        // Return the element at the specified index
+        return (E) elements[index];
     }
-    
-    // Implement the remove(int index) method
-    @Override
-    public void remove(int index) {
-        if (index < 0 || index >= size) { // check if index is out of bounds
+
+    // Remove the element at the specified index
+    public E remove(int index) {
+        // Check if the index is valid
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        for (int i = index; i < size - 1; i++) { // shift all subsequent elements to the left by one position
-            elements[i] = elements[i+1];
+        // Get the element at the specified index
+        E removedElement = (E) elements[index];
+        // Shift all subsequent elements to the left by one position
+        for (int i = index; i < size - 1; i++) {
+            elements[i] = elements[i + 1];
         }
-        elements[size-1] = null; // set last element to null
-        size--; // decrement size variable
+        // Decrement the size variable
+        size--;
+        // Return the removed element
+        return removedElement;
+    }
+
+    // Get the number of elements in the list
+    public int size() {
+        return size;
+    }
+}
+  
