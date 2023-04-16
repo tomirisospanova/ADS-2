@@ -1,1 +1,42 @@
+public class MyArrayList<E> implements MyList<E> {
 
+    private Object[] elements; // private instance variable to hold the elements of the list
+    private int size; // int variable to keep track of the number of elements in the list
+    
+    public MyArrayList() {
+        elements = new Object[10]; // initialize elements array with size 10
+        size = 0; // initialize size to 0
+    }
+    
+    // Implement the add(E element) method
+    @Override
+    public void add(E element) {
+        if (size == elements.length) { // if size is equal to the length of the elements array
+            Object[] newElements = new Object[elements.length * 2]; // create new array with double the size
+            System.arraycopy(elements, 0, newElements, 0, size); // copy over elements from the original array
+            elements = newElements; // update reference to elements array
+        }
+        elements[size] = element; // add new element to end of array
+        size++; // increment size variable
+    }
+    
+    // Implement the get(int index) method
+    @Override
+    public E get(int index) {
+        if (index < 0 || index >= size) { // check if index is out of bounds
+            throw new IndexOutOfBoundsException();
+        }
+        return (E) elements[index]; // return element at specified index
+    }
+    
+    // Implement the remove(int index) method
+    @Override
+    public void remove(int index) {
+        if (index < 0 || index >= size) { // check if index is out of bounds
+            throw new IndexOutOfBoundsException();
+        }
+        for (int i = index; i < size - 1; i++) { // shift all subsequent elements to the left by one position
+            elements[i] = elements[i+1];
+        }
+        elements[size-1] = null; // set last element to null
+        size--; // decrement size variable
