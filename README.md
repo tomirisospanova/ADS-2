@@ -5,7 +5,7 @@ Ospanova Tomiris(SE-2202)
 
 MyArrayList
 
-- `MyArrayList` is an implementation of the MyList interface using an array-based data structure. It provides a simple dynamic array that grows as needed to accommodate new elements.
+- `MyArrayList` class
 
 Constructors
 - `MyArrayList()` - creates a new empty list with an initial capacity of 10.
