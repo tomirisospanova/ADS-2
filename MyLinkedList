@@ -1,1 +1,91 @@
-
+public class MyLinkedList<E> implements MyList<E> {
+    
+    // private inner class Node to represent a node in the linked list
+    private class Node {
+        E element;
+        Node next;
+        Node prev;
+        
+        public Node(E element, Node next, Node prev) {
+            this.element = element;
+            this.next = next;
+            this.prev = prev;
+        }
+    }
+    
+    // private instance variables
+    private Node head;
+    private Node tail;
+    private int size;
+    
+    // add method
+    public void add(E element) {
+        Node newNode = new Node(element, null, tail);
+        if (tail == null) {
+            // if the list is empty, set head and tail to the new node
+            head = newNode;
+            tail = newNode;
+        } else {
+            // otherwise, set the next reference of the current tail to the new node
+            tail.next = newNode;
+            // update the tail reference to the new node
+            tail = newNode;
+        }
+        // increment the size variable
+        size++;
+    }
+    
+    // get method
+    public E get(int index) {
+        // check if the index is valid
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
+        }
+        // traverse the list from the head or tail, depending on which is closer to the index
+        Node current = (index < size / 2) ? head : tail;
+        if (index < size / 2) {
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+        } else {
+            for (int i = size - 1; i > index; i--) {
+                current = current.prev;
+            }
+        }
+        // return the element at the specified index
+        return current.element;
+    }
+    
+    // remove method
+    public void remove(int index) {
+        // check if the index is valid
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index out of bounds: " + index);
+        }
+        Node current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        if (current.prev == null) {
+            // if the node to remove is the head, update the head reference to the next node
+            head = current.next;
+        } else {
+            // otherwise, update the next reference of the previous node to the next node
+            current.prev.next = current.next;
+        }
+        if (current.next == null) {
+            // if the node to remove is the tail, update the tail reference to the previous node
+            tail = current.prev;
+        } else {
+            // otherwise, update the previous reference of the next node to the previous node
+            current.next.prev = current.prev;
+        }
+        // decrement the size variable
+        size--;
+    }
+    
+    // size method
+    public int size() {
+        return size;
+    }
+   
