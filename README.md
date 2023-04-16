@@ -9,6 +9,7 @@ MyArrayList
 
 Constructors
 - `MyArrayList()` - creates a new empty list with an initial capacity of 10.
+
 Public methods
 - `void add(E element)` - adds the specified element to the end of the list. If the list is full, it will be automatically resized to twice its current capacity.
 - `E get(int index)` - returns the element at the specified index. Throws IndexOutOfBoundsException if the index is out of range.
