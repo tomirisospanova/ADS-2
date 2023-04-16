@@ -15,3 +15,10 @@ Public methods
 - `E get(int index)` - returns the element at the specified index. Throws IndexOutOfBoundsException if the index is out of range.
 - `void remove(int index)` - removes the element at the specified index. Throws IndexOutOfBoundsException if the index is out of range.
 - `int size()` - returns the number of elements in the list.
+
+MyLinkedList
+- `MyLinkedList` class
+- `add(E element)` - adds an element to the end of the list.
+- `get(int index)` - returns the element at the given index.
+- `remove(int index)` - removes the element at the given index from the list.
+- `size()` - returns the number of elements in the list.
