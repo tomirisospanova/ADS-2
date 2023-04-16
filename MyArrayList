@@ -1,67 +1,65 @@
 public class MyArrayList<E> implements MyList<E> {
 
-    // Define an array to hold the elements of the list
-    private Object[] elements;
+    private Object[] elements; // private instance variable to hold the elements of the list
+    private int size; // int variable to keep track of the number of elements in the list
 
-    // Define a variable to keep track of the number of elements in the list
-    private int size;
-
-    // Constructor to create a new MyArrayList object with an initial capacity
-    public MyArrayList(int initialCapacity) {
-        elements = new Object[initialCapacity];
-        size = 0;
+    public MyArrayList() {
+        elements = new Object[10]; // initialize elements array with size 10
+        size = 0; // initialize size to 0
     }
 
-    // Add an element to the end of the list
+    // Implement the add(E element) method
+    @Override
     public void add(E element) {
-        // Check if the array is large enough to accommodate the new element
-        if (size == elements.length) {
-            // If not, create a new array with double the size of the original array
-            Object[] newElements = new Object[2 * elements.length];
-            // Copy over the elements from the original array
-            for (int i = 0; i < size; i++) {
-                newElements[i] = elements[i];
-            }
-            // Set the elements variable to the new array
-            elements = newElements;
+        if (size == elements.length) { // if size is equal to the length of the elements array
+            Object[] newElements = new Object[elements.length * 2]; // create new array with double the size
+            System.arraycopy(elements, 0, newElements, 0, size); // copy over elements from the original array
+            elements = newElements; // update reference to elements array
         }
-        // Add the new element to the end of the array
-        elements[size] = element;
-        // Increment the size variable
-        size++;
+        elements[size] = element; // add new element to end of array
+        size++; // increment size variable
     }
 
-    // Get the element at the specified index
+    // Implement the get(int index) method
+    @Override
     public E get(int index) {
-        // Check if the index is valid
-        if (index < 0 || index >= size) {
+        if (index < 0 || index >= size) { // check if index is out of bounds
             throw new IndexOutOfBoundsException();
         }
-        // Return the element at the specified index
-        return (E) elements[index];
+        return (E) elements[index]; // return element at specified index
     }
 
-    // Remove the element at the specified index
-    public E remove(int index) {
-        // Check if the index is valid
-        if (index < 0 || index >= size) {
+    // Implement the remove(int index) method
+    @Override
+    public void remove(int index) {
+        if (index < 0 || index >= size) { // check if index is out of bounds
             throw new IndexOutOfBoundsException();
         }
-        // Get the element at the specified index
-        E removedElement = (E) elements[index];
-        // Shift all subsequent elements to the left by one position
-        for (int i = index; i < size - 1; i++) {
-            elements[i] = elements[i + 1];
+        for (int i = index; i < size - 1; i++) { // shift all subsequent elements to the left by one position
+            elements[i] = elements[i+1];
         }
-        // Decrement the size variable
-        size--;
-        // Return the removed element
-        return removedElement;
+        elements[size-1] = null; // set last element to null
+        size--; // decrement size variable
     }
 
-    // Get the number of elements in the list
+    // Implement the size() method
+    @Override
     public int size() {
-        return size;
+        return size; // return size variable
+    }
+
+    // Implement any other methods specified by the MyList interface.
+    // (none specified in this case)
+
+    // Test all methods of MyArrayList
+    public static void main(String[] args) {
+        MyList<String> list = new MyArrayList<>();
+        list.add("Hello");
+        list.add("World");
+        list.add("!");
+        System.out.println(list.get(1)); // should print "World"
+        list.remove(0);
+        System.out.println(list.get(0)); // should print "World"
+        System.out.println(list.size()); // should print 2
     }
 }
-  
